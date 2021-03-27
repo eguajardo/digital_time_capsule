@@ -79,6 +79,8 @@ contract TimeCapsule {
      * summary, lockDate and unlockDate
      */
     function getCapsuleLabel(uint256 id) external view returns (CapsuleLabel memory) {
+        require(exists(id), "ERROR_INVALID_ID");
+        
         return (_mapCapsulesLabels[id]);
     }
 
@@ -91,9 +93,20 @@ contract TimeCapsule {
      * is not greater than the unlockDate
      */
     function getCapsuleContent(uint256 id) external view returns (CapsuleContent memory) {
+        require(exists(id), "ERROR_INVALID_ID");
         require (block.timestamp >= _mapCapsulesLabels[id].unlockDate, "ERROR_CAPSULE_LOCKED");
 
         return (_mapCapsulesContent[id]);
+    }
+
+    /**
+     * @dev Verifies if the capsule exists
+     * @param id The capsule ID
+     * @return true if the capsule exists, false otherwise
+     */
+    function exists(uint256 id) internal view returns (bool) {
+        return _mapCapsulesLabels[id].lockDate != 0 
+            || _mapCapsulesLabels[id].unlockDate != 0;
     }
 
 }
