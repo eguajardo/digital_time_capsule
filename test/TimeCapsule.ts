@@ -80,4 +80,14 @@ describe("TimeCapsule contract", () => {
             .to.be.revertedWith("ERROR_CAPSULE_LOCKED");
     });
 
+    it('Invalid ID for Capsule label', async() => {
+        await expect(timeCapsule.getCapsuleLabel(0))
+            .to.be.revertedWith("ERROR_INVALID_ID");
+    });
+
+    it('Invalid ID for Capsule content', async() => {
+        await expect(timeCapsule.getCapsuleContent(0))
+            .to.be.revertedWith("ERROR_INVALID_ID");
+    });
+
 });
