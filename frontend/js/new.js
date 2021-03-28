@@ -7,11 +7,15 @@ $('#unlock-date').datetimepicker({
 $('#unlock-date').val(moment().format(DATE_TIME_FORMAT));
 
 async function postCapsule() {
-  const message = $('#message').val();
-  const path = await postMessageToIPFS(message);
-
   const summary = $('#summary').val();
   const unlockDate = moment($('#unlock-date').val(), DATE_TIME_FORMAT).unix();
+  
+  const aesKey = CryptoJS.lib.WordArray.random(16).toString();
+  const encryptedMessage = CryptoJS.AES.encrypt(
+    $('#message').val(), aesKey
+  ).toString();
+
+  const path = await postMessageToIPFS(encryptedMessage);
 
 }
 
