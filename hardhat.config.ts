@@ -15,5 +15,13 @@ const config: HardhatUserConfig = {
   solidity: {
     compilers: [{ version: "0.8.3", settings: {} }],
   },
+  networks: {
+    hardhat: {
+      mining: {
+        auto: false,
+        interval: 10000
+      },
+    }
+  }
 };
 export default config;

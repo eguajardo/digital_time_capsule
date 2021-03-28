@@ -20,6 +20,7 @@ async function postCapsule() {
 }
 
 async function postMessageToIPFS(message) {
+  console.log("Posting to IPFS");
   const ipfs = window.IpfsHttpClient({
     host: 'ipfs.infura.io',
     port: 5001,
@@ -28,10 +29,12 @@ async function postMessageToIPFS(message) {
 
   const response = await ipfs.add(message);
 
+  console.log("IPFS path:", response.path);
   return response.path;
 }
 
 async function postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey) {
+  console.log("Posting capsule to blockchain");
   await window.ethereum.enable();
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
@@ -48,11 +51,15 @@ async function postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey) {
     ipfsPath,
     aesKey
   );
+
+  console.log("transaction:", tx);
   
   const receipt = await provider.waitForTransaction(tx.hash);
 
   const filter = timeCapsule.filters.CapsuleCreatedEvent();
   filter.blockHash = receipt.blockHash
+
+  console.log("receipt:", receipt);
 
   timeCapsule.on(filter, (id, event) => {
     console.log("id:", id.toNumber());
