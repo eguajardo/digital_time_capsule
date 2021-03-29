@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Time Capsule | New</title>
+  <title>Time Capsule | Index</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -17,30 +17,19 @@
 <body>
 
   <div class="container">
-    <form>
-      <div class="form-group">
-        <label for="summary">Summary</label>
-        <input type="text" name="summary" id="summary" placeholder="publicly visible at all times" class="form-control" />
-      </div>
+    <div id="alert-success" class="alert alert-success text-center" role="alert" style="display: none;" ></div>
+    
+    <div class="text-right">
+      <a class="previous-link" >Previous</a> | <a class="next-link" >Next</a>
+    </div>
+    <div id="card-list" class="card-list">
 
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea type="text" name="message" id="message" class="form-control" rows="5" placeholder="super secret message that won't be visible until the time capsule is unlocked" ></textarea>
-      </div>
+    <!-- JavaScript magic will inject cards here -->
 
-      <div class="form-group">
-        <label for="unlock-date">Unlock date</label>
-        <div class="row">
-          <div class="col-sm-12">
-            <input type="text" name="unlock-date" id="unlock-date" class="form-control" />
-          </div>
-        </div>
-      </div>
-      
-      <div id="actions">
-        <input type="button" name="submit" value="Submit" class="btn btn-primary btn-lg btn-block" onclick="postCapsule()">
-      </div>
-    </form>
+    </div>
+    <div class="text-right">
+      <a class="previous-link" >Previous</a> | <a class="next-link" >Next</a>
+    </div>
   </div>
 
   <script src="lib/js/jquery-3.4.1.min.js" charset="utf-8" type="text/javascript"></script>
@@ -57,7 +46,7 @@
   
   <script src="js/_utils.js"></script>
   <script src="js/_contract.js"></script>
-  <script src="js/new.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>

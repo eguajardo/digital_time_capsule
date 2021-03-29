@@ -25,11 +25,12 @@
 
       <div class="form-group">
         <label for="message">Message</label>
-        <textarea type="text" name="message" id="message" class="form-control" rows="5" disabled></textarea>
+        <div id="alert-danger" class="alert alert-danger text-center" role="alert" style="display: none;" ></div>
+        <textarea type="text" name="message" id="message" class="form-control" rows="5" style="display: none;" disabled></textarea>
       </div>
 
-      <div class="form-group">
-        <label for="unlock-date">Unlock date</label>
+      <div id="unlock-date-div" class="form-group" style="display: none;">
+        <label for="unlock-date">Unlocked since</label>
         <div class="row">
           <div class="col-sm-12">
             <input type="text" name="unlock-date" id="unlock-date" class="form-control" disabled />
@@ -51,7 +52,7 @@
   <script src="lib/js/ipfs-api.js"></script>
   <script src="lib/js/ethers-5.0.umd.min.js" charset="utf-8" type="text/javascript"></script>
   
-  <script src="js/_constants.js"></script>
+  <script src="js/_utils.js"></script>
   <script src="js/_contract.js"></script>
   <script src="js/message.js"></script>
 </body>

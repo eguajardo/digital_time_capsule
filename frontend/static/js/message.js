@@ -10,33 +10,13 @@ async function init() {
     provider
   )
 
-  let capsuleId = getUrlParameter("capsuleId");
-  let txHash = getUrlParameter("txHash");
-
-  console.log("txHash:", txHash);
-  if (txHash !== undefined) {
-    capsuleId = await verifyTransaction(txHash, timeCapsule, provider);
-  }
+  const capsuleId = getUrlParameter("capsuleId");
   
   console.log("capsuleId:", capsuleId);
   if (capsuleId !== undefined) {
     await loadCapsuleLabel(capsuleId, timeCapsule);
     await loadCapsuleContent(capsuleId, timeCapsule);
   }
-}
-
-async function verifyTransaction(txHash, timeCapsule, provider) {
-  const receipt = await provider.waitForTransaction(txHash);
-
-  console.log("receipt:", receipt);
-
-  let capsuleId;
-  receipt.logs.forEach(log => {
-    capsuleId = timeCapsule.interface.parseLog(log).args[0].toNumber();
-    console.log("log:", capsuleId);
-  });
-
-  return capsuleId;
 }
 
 async function loadCapsuleLabel(capsuleId, timeCapsule) {
@@ -64,10 +44,14 @@ async function loadCapsuleContent(capsuleId, timeCapsule) {
     ).toString(CryptoJS.enc.Utf8);
 
     $('#message').val(decryptedMessage);
+    $('#message').show();
+    $('#unlock-date-div').show();
   } catch(error) {
     console.log("error:", error);
 
     if (error.data.message.indexOf("ERROR_CAPSULE_LOCKED") >= 0) {
+      $('#alert-danger').html(`This message is still locked until <span class="font-weight-bold">${$('#unlock-date').val()}</span>`);
+      $('#alert-danger').show();
       console.log("Capsule still locked");
     }
   }
@@ -89,19 +73,4 @@ async function getIpfsMessage(ipfsPath) {
 
   console.log("IPFS message retrieved");
   return ipfsMessage;
-}
-
-function getUrlParameter (sParam) {
-  const sPageURL = window.location.search.substring(1)
-  const sURLVariables = sPageURL.split('&')
-  let sParameterName
-  let i
-
-  for (i = 0; i < sURLVariables.length; i++) {
-    sParameterName = sURLVariables[i].split('=')
-
-    if (sParameterName[0] === sParam) {
-      return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1])
-    }
-  }
 }

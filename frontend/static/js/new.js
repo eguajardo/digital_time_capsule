@@ -16,7 +16,7 @@ async function postCapsule() {
   const ipfsPath = await postMessageToIPFS(encryptedMessage);
   const tx = await postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey);
 
-  window.location.href = "message.html?txHash=" + tx.hash;
+  window.location.href = "index.html?txHash=" + tx.hash;
 }
 
 async function postMessageToIPFS(message) {
