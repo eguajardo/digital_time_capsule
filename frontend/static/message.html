@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Time Capsule | New</title>
+  <title>Time Capsule | Message</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -20,25 +20,21 @@
     <form>
       <div class="form-group">
         <label for="summary">Summary</label>
-        <input type="text" name="summary" id="summary" class="form-control" />
+        <input type="text" name="summary" id="summary" class="form-control" disabled />
       </div>
 
       <div class="form-group">
         <label for="message">Message</label>
-        <textarea type="text" name="message" id="message" class="form-control" rows="5" ></textarea>
+        <textarea type="text" name="message" id="message" class="form-control" rows="5" disabled></textarea>
       </div>
 
       <div class="form-group">
         <label for="unlock-date">Unlock date</label>
         <div class="row">
           <div class="col-sm-12">
-            <input type="text" name="unlock-date" id="unlock-date" class="form-control" />
+            <input type="text" name="unlock-date" id="unlock-date" class="form-control" disabled />
           </div>
         </div>
-      </div>
-      
-      <div id="actions">
-        <input type="button" name="submit" value="Submit" class="btn btn-primary btn-lg btn-block" onclick="postCapsule()">
       </div>
     </form>
   </div>
@@ -57,7 +53,7 @@
   
   <script src="js/_constants.js"></script>
   <script src="js/_contract.js"></script>
-  <script src="js/new.js"></script>
+  <script src="js/message.js"></script>
 </body>
 
 </html>

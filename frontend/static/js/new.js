@@ -1,5 +1,3 @@
-const DATE_TIME_FORMAT = 'MM/DD/YYYY HH:mm:ss';
-
 $('#unlock-date').datetimepicker({
   format: DATE_TIME_FORMAT
 });
@@ -16,7 +14,9 @@ async function postCapsule() {
   ).toString();
 
   const ipfsPath = await postMessageToIPFS(encryptedMessage);
-  await postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey);
+  const tx = await postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey);
+
+  window.location.href = "message.html?txHash=" + tx.hash;
 }
 
 async function postMessageToIPFS(message) {
@@ -53,15 +53,6 @@ async function postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey) {
   );
 
   console.log("transaction:", tx);
-  
-  const receipt = await provider.waitForTransaction(tx.hash);
 
-  const filter = timeCapsule.filters.CapsuleCreatedEvent();
-  filter.blockHash = receipt.blockHash
-
-  console.log("receipt:", receipt);
-
-  timeCapsule.on(filter, (id, event) => {
-    console.log("id:", id.toNumber());
-  });
+  return tx;
 }
