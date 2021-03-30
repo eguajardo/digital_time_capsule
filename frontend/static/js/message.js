@@ -1,6 +1,8 @@
 init();
 
 async function init() {
+  $('#loading-div').loading('start');
+
   await window.ethereum.enable();
   const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -43,10 +45,18 @@ async function loadCapsuleContent(capsuleId, timeCapsule) {
       capsuleContent.aesKey
     ).toString(CryptoJS.enc.Utf8);
 
-    $('#message').val(decryptedMessage);
-    $('#message').show();
+    $('#loading-div').loading('stop');
+    $('#markdown-viewer').show();
+
+    new toastui.Editor({
+      el: document.querySelector('#markdown-viewer'),
+      initialValue: decryptedMessage,
+      usageStatistics: false
+    });
+
     $('#unlock-date-div').show();
   } catch(error) {
+    $('#loading-div').loading('stop');
     console.log("error:", error);
 
     if (error.data.message.indexOf("ERROR_CAPSULE_LOCKED") >= 0) {
@@ -66,9 +76,9 @@ async function getIpfsMessage(ipfsPath) {
   });
 
   const utf8decoder = new TextDecoder();
-  let ipfsMessage;
+  let ipfsMessage = "";
   for await (const chunk of await ipfs.cat(ipfsPath)) {
-    ipfsMessage = utf8decoder.decode(chunk);
+    ipfsMessage += utf8decoder.decode(chunk);
   }
 
   console.log("IPFS message retrieved");

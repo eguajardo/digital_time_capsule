@@ -1,7 +1,7 @@
 init();
 
 async function init() {
-  $('#alert-success').hide();
+  $('#loading-div').loading('start');
 
   let startIndex = parseInt(getUrlParameter("start"));
   if (isNaN(startIndex)) {
@@ -90,6 +90,7 @@ async function loadCards(startIndex, elementCount, timeCapsule) {
     }
   }
 
+  $('#loading-div').loading('stop');
   $('#card-list').html(cardListHtml);
 }
 

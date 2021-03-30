@@ -17,6 +17,10 @@ a:hover {
   color:#4fcccd;
 }
 
+a.active {
+  color:#4fcccd;
+}
+
 a:focus {
   outline:none;
   outline-offset: 0;
@@ -30,19 +34,29 @@ a {
 }
 
 .form-control::-moz-placeholder {
-  color: rgb(158, 158, 158);
+  color: rgb(189, 189, 189);
   opacity: 1;
 }
 .form-control:-ms-input-placeholder {
-  color: rgb(158, 158, 158);
+  color: rgb(189, 189, 189);
 }
 .form-control::-webkit-input-placeholder {
-  color: rgb(158, 158, 158);
+  color: rgb(189, 189, 189);
 }
 
+.content-container {
+  padding: 1.5em 1.5em 1.5em 1.5em;
+  border: 1px solid #ddd;
+  border-radius: 0 0 8px 8px;
+  -moz-box-shadow: 1px 1px 5px #ececec;
+  -webkit-box-shadow: 1px 1px 5px #ececec;
+  box-shadow: 1px 1px 5px #ececec;
+  margin-bottom: 2em;
+}
 
 .card {
   margin-bottom: 1em;
+  -moz-box-shadow: 0px 2px 2px 0px rgb(0 0 0 / 15%);
   -webkit-box-shadow: 0px 2px 2px 0px rgb(0 0 0 / 15%);
   box-shadow: 0px 2px 2px 0px rgb(0 0 0 / 15%);
 }

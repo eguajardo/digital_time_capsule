@@ -10,13 +10,30 @@
 
   <link rel="stylesheet" href="lib/css/font-awesome.min.css" >
   <link rel="stylesheet" href="lib/css/bootstrap-datetimepicker.min.css" >
+  <link rel="stylesheet" href="lib/css/codemirror.min.css" />
+  <link rel="stylesheet" href="lib/css/toastui-editor-viewer.min.css" />
+  <link rel="stylesheet" href="lib/css/loading.css" />
 
   <link rel="stylesheet" href="css/style.css" >
 </head>
 
 <body>
 
-  <div class="container">
+  <nav class="navbar navbar-expand-lg bg-light mb-4">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ml-auto">
+          <a class="nav-item nav-link" href="new.html">Create Capsule <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="index.html">Browse Capsules</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container content-container">
     <form>
       <div class="form-group">
         <label for="summary">Summary</label>
@@ -26,7 +43,8 @@
       <div class="form-group">
         <label for="message">Message</label>
         <div id="alert-danger" class="alert alert-danger text-center" role="alert" style="display: none;" ></div>
-        <textarea type="text" name="message" id="message" class="form-control" rows="5" style="display: none;" disabled></textarea>
+        <div id="loading-div"></div>
+        <div id="markdown-viewer" class="border px-3" style="display: none;" ></div>
       </div>
 
       <div id="unlock-date-div" class="form-group" style="display: none;">
@@ -46,6 +64,8 @@
   <script src="lib/js/popper.min.js" type="text/javascript"></script>
   <script src="lib/js/moment.min.js" type="text/javascript"></script>
   <script src="lib/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+  <script src="lib/js/toastui-editor-viewer.min.js"></script>
+  <script src="lib/js/jquery.loading.min.js"></script>
 
   <script src="lib/js/aes.js"></script>
 
