@@ -1,7 +1,7 @@
 const Contracts = {
   "TimeCapsule": {
-    "network": "ropsten",
-    "address": "0xf29DB9Ba8867dAe93d02D46df63e8404D161FE8b",
+    "network": "localhost",
+    "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
     "abi": [
       {
         "anonymous": false,
