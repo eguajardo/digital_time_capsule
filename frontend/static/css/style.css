@@ -7,26 +7,26 @@ body {
   color: black;
 }
 
-a{
+a, #new-link, #browse-link {
   color:#428bca;
 }
 
-a:hover {
+a:hover, #new-link:hover, #browse-link:hover {
   outline: none;
   text-decoration:none;
   color:#4fcccd;
 }
 
-a.active {
+a.active, #new-link.active, #browse-link.active {
   color:#4fcccd;
 }
 
-a:focus {
+a:focus, #new-link:focus, #browse-link:focus {
   outline:none;
   outline-offset: 0;
 }
 
-a {
+a, #new-link, #browse-link {
   -webkit-transition: 300ms;
   -moz-transition: 300ms;
   -o-transition: 300ms;
