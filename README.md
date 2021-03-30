@@ -10,6 +10,8 @@ The messages will be encrypted and stored in IPFS, then the corresponding path a
 
 ## Demo
 
+Smart contract is deployed to Ropsten testnetwork at this address: **0xf29DB9Ba8867dAe93d02D46df63e8404D161FE8b**
+
 Working demo fully hosted in IPFS: https://gateway.pinata.cloud/ipfs/QmYzTZ6p5uWAJjfkxcbvd5ft3naLCKyVe1SxcTkFt6Rsz7/
 
 Video demo (also hosted in IPFS): https://gateway.pinata.cloud/ipfs/QmeZpSTCbJe1qEB8NRAoFWs7X1NP2bvHvU66ndQ53FTEo4
