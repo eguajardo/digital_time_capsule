@@ -4,19 +4,19 @@ import { Contract, ContractFactory } from "@ethersproject/contracts";
 import { artifacts, ethers, network } from "hardhat";
 
 async function main() {
-    console.log("Deploying to network:", network.name);
+  console.log("Deploying to network:", network.name);
 
-    const TimeCapsule: ContractFactory = await ethers.getContractFactory("TimeCapsule");
-    const timeCapsule: Contract = await TimeCapsule.deploy();
+  const TimeCapsule: ContractFactory = await ethers.getContractFactory("TimeCapsule");
+  const timeCapsule: Contract = await TimeCapsule.deploy();
 
-    await timeCapsule.deployed();
+  await timeCapsule.deployed();
 
-    artifacts
+  artifacts
 
-    console.log("Contract Address:", timeCapsule.address);
-    console.log("Contract Hash:", timeCapsule.deployTransaction.hash);
+  console.log("Contract Address:", timeCapsule.address);
+  console.log("Contract Hash:", timeCapsule.deployTransaction.hash);
 
-    saveFrontEndFiles(timeCapsule);
+  saveFrontEndFiles(timeCapsule);
 }
 
 function saveFrontEndFiles(timeCapsule: Contract) {
@@ -31,6 +31,7 @@ function saveFrontEndFiles(timeCapsule: Contract) {
 
   let Contracts = {
     TimeCapsule: {
+      network: network.name,
       address: timeCapsule.address,
       abi: TimeCapsuleArtifact.abi
     }

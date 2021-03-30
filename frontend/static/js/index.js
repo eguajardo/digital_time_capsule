@@ -19,8 +19,8 @@ async function init() {
   const timeCapsule = await getContract(provider);  
 
   let txHash = getUrlParameter("txHash");
-  console.log("txHash:", txHash);
   if (txHash !== undefined) {
+    console.log("txHash:", txHash);
     verifyTransaction(txHash, timeCapsule, provider);
   }
 
@@ -78,13 +78,13 @@ async function loadCards(startIndex, elementCount, timeCapsule) {
     try {
       const capsuleId = startIndex + i;
       const capsuleLabel = await timeCapsule.getCapsuleLabel(capsuleId);
-      
+      console.log("capsuleId:", capsuleId);
       cardListHtml += createCardHtml(capsuleId, capsuleLabel);
     } catch(error) {
-      if (error.data.message.indexOf("ERROR_INVALID_ID") >= 0) {
-        // disable next link
-        $(".next-link").attr("href", null);
-      }
+      console.log("error:", error);
+      $('#loading-div').loading('stop');
+      // disable next link
+      $(".next-link").attr("href", null);
 
       break;
     }

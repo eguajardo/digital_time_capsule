@@ -1,8 +1,6 @@
 init();
 
 async function init() {
-  $('#loading-div').loading('start');
-
   await window.ethereum.enable();
   const provider = new ethers.providers.Web3Provider(window.ethereum);
 
@@ -16,8 +14,9 @@ async function init() {
   
   console.log("capsuleId:", capsuleId);
   if (capsuleId !== undefined) {
-    await loadCapsuleLabel(capsuleId, timeCapsule);
-    await loadCapsuleContent(capsuleId, timeCapsule);
+    if (await loadCapsuleLabel(capsuleId, timeCapsule)) {
+      await loadCapsuleContent(capsuleId, timeCapsule);
+    }
   }
 }
 
@@ -28,13 +27,21 @@ async function loadCapsuleLabel(capsuleId, timeCapsule) {
 
     $('#summary').val(capsuleLabel.summary);
     $('#unlock-date').val(moment.unix(capsuleLabel.unlockDate).format(DATE_TIME_FORMAT));
+
+    $('#form').show();
+
+    return true;
   } catch(error) {
     console.log("error:", error);
+    
+    $('#loading-div').loading('stop');
   }
 }
 
 async function loadCapsuleContent(capsuleId, timeCapsule) {
   try {
+    $('#loading-div').loading('start');
+
     const capsuleContent = await timeCapsule.getCapsuleContent(capsuleId);
     console.log("capsuleContent:", capsuleContent);
 
@@ -59,11 +66,9 @@ async function loadCapsuleContent(capsuleId, timeCapsule) {
     $('#loading-div').loading('stop');
     console.log("error:", error);
 
-    if (error.data.message.indexOf("ERROR_CAPSULE_LOCKED") >= 0) {
-      $('#alert-danger').html(`This message is still locked until <span class="font-weight-bold">${$('#unlock-date').val()}</span>`);
-      $('#alert-danger').show();
-      console.log("Capsule still locked");
-    }
+    $('#alert-danger').html(`This message is still locked until <span class="font-weight-bold">${$('#unlock-date').val()}</span>`);
+    $('#alert-danger').show();
+    console.log("Capsule still locked");
   }
 }
 
