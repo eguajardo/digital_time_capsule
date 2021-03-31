@@ -40,11 +40,22 @@ const Web3Handler = {
    * @returns a Web3Provider
    */
   async getDefaultProvider() {
+    let provider;
+
     let network = Contracts.network;
     if (network === 'localhost') {
       network = "http://localhost:8545";
     }
-    const provider = new ethers.getDefaultProvider(network);
+
+    try {
+      // we first try infura default provider, 
+      // the one from ethers suck a bit
+      provider = new ethers.providers.InfuraProvider(network);
+      console.log("Provider set from infura");
+    } catch(error) {
+      provider = new ethers.getDefaultProvider(network);
+      console.log("Provider set from ethers");
+    }
     
     console.log(`Getting default provider for netwrok ${Contracts.network}:`, provider);
     return provider;
