@@ -14,3 +14,8 @@ function getUrlParameter (sParam) {
     }
   }
 }
+
+function displayMessage(selector, message) {
+  $(selector).html(message);
+  $(selector).show();
+}

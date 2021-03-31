@@ -30,8 +30,8 @@ function saveFrontEndFiles(timeCapsule: Contract) {
   const TimeCapsuleArtifact = artifacts.readArtifactSync("TimeCapsule");
 
   let Contracts = {
+    network: network.name,
     TimeCapsule: {
-      network: network.name,
       address: timeCapsule.address,
       abi: TimeCapsuleArtifact.abi
     }

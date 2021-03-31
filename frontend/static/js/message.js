@@ -1,14 +1,8 @@
 init();
 
 async function init() {
-  await window.ethereum.enable();
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-
-  const timeCapsule = new ethers.Contract(
-    Contracts.TimeCapsule.address,
-    Contracts.TimeCapsule.abi,
-    provider
-  )
+  const provider = await Web3Handler.getDefaultProvider();
+  const timeCapsule = await Web3Handler.getContract(provider, 'TimeCapsule');
 
   const capsuleId = getUrlParameter("capsuleId");
   
@@ -66,8 +60,8 @@ async function loadCapsuleContent(capsuleId, timeCapsule) {
     $('#loading-div').loading('stop');
     console.log("error:", error);
 
-    $('#alert-danger').html(`This message is still locked until <span class="font-weight-bold">${$('#unlock-date').val()}</span>`);
-    $('#alert-danger').show();
+    displayMessage('#alert-danger', `This message is still locked until <span class="font-weight-bold">${$('#unlock-date').val()}</span>`)
+
     console.log("Capsule still locked");
   }
 }

@@ -21,10 +21,26 @@ async function postCapsule() {
     editor.getMarkdown(), aesKey
   ).toString();
 
-  const ipfsPath = await postMessageToIPFS(encryptedMessage);
-  const tx = await postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey);
+  try {
+    const provider = await Web3Handler.getCurrentProvider();
 
-  window.location.href = "index.html?txHash=" + tx.hash;
+    const ipfsPath = await postMessageToIPFS(encryptedMessage);
+    const tx = await postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey, provider);
+
+    if (tx) {
+      window.location.href = "index.html?txHash=" + tx.hash;
+    }
+  } catch(error) {
+    console.log("error:", error);
+
+    if(error == "NO_PROVIDER") {
+      displayMessage('#alert-danger', `No wallet detected, do you want to install <a href="https://metamask.io/download.html">MetaMask</a>?`);
+    } else if(error === "INVALID_NETWORK") {
+      displayMessage('#alert-danger', `Please verify your wallet is connected to the <strong>${Contracts.network}</strong> network`);
+    } else {
+      throw error;
+    }
+  }
 }
 
 async function postMessageToIPFS(message) {
@@ -41,17 +57,11 @@ async function postMessageToIPFS(message) {
   return response.path;
 }
 
-async function postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey) {
+async function postCapsuleToBlockchain(summary, unlockDate, ipfsPath, aesKey, provider) {
   console.log("Posting capsule to blockchain");
-  await window.ethereum.enable();
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
 
-  const timeCapsule = new ethers.Contract(
-    Contracts.TimeCapsule.address,
-    Contracts.TimeCapsule.abi,
-    provider
-  ).connect(signer);
+  const timeCapsule = (await Web3Handler.getContract(provider, 'TimeCapsule'))
+    .connect(provider.getSigner());
 
   const tx = await timeCapsule.createCapsule(
     summary,

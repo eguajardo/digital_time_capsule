@@ -15,8 +15,8 @@ async function init() {
 
   updatePaginationLinks(startIndex, elementCount);
 
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const timeCapsule = await getContract(provider);  
+  const provider = await Web3Handler.getDefaultProvider();
+  const timeCapsule = await Web3Handler.getContract(provider, 'TimeCapsule');
 
   let txHash = getUrlParameter("txHash");
   if (txHash !== undefined) {
@@ -61,16 +61,6 @@ function updatePaginationLinks(startIndex, elementCount) {
   }
 }
 
-async function getContract(provider) {
-  await window.ethereum.enable();
-
-  return new ethers.Contract(
-    Contracts.TimeCapsule.address,
-    Contracts.TimeCapsule.abi,
-    provider
-  )
-}
-
 async function loadCards(startIndex, elementCount, timeCapsule) {
   let cardListHtml = "";
 
@@ -78,7 +68,7 @@ async function loadCards(startIndex, elementCount, timeCapsule) {
     try {
       const capsuleId = startIndex + i;
       const capsuleLabel = await timeCapsule.getCapsuleLabel(capsuleId);
-      console.log("capsuleId:", capsuleId);
+
       cardListHtml += createCardHtml(capsuleId, capsuleLabel);
     } catch(error) {
       console.log("error:", error);
